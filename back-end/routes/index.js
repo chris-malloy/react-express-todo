@@ -19,7 +19,7 @@ router.get('/getStudents', function(req, res, next) {
 	});
 });
 
-router.post('/addStudent',(req,res)=>{
+router.post('/addStudent', (req,res)=>{
 	res.json(req.body);
 })
 
