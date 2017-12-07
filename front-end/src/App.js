@@ -6,6 +6,8 @@ import axios from 'axios';
 import ToDo from './components/ToDo';
 import NavBar from './components/NavBar';
 import Heading from './components/Heading';
+import Students from './components/Students';
+
 
 class App extends Component {
 	constructor(){
@@ -19,7 +21,6 @@ class App extends Component {
 	componentDidMount(){
 		axios.get('http://localhost:3000/getStudents')
 			.then((response)=>{
-				console.log(response)
 				this.setState({
 					students: response.data,
 				})
@@ -45,27 +46,14 @@ class App extends Component {
 	};
 
 	render() {
-		console.log(this.state)
-		var studentsArray = this.state.students.map((student,i)=>{
-			return(<li key={i}>{student.name}</li>)
-		})
+
 		return (
 			<div className="to-do-app">
 				<NavBar />
 				<Heading />
 				<ToDo />
 				<div className="App container">
-				{/*<div className="row">
-						<div className="col s12">
-							<form onSubmit={this.handleSubmit}>
-								<input type="text" id="new-student" placeholder="New Student Name"/>
-								<button type="submit">Add Student</button>
-							</form>
-						</div>
-						<div>
-							{studentsArray}
-						</div>
-					</div>*/}
+		
 				</div>
 			</div>
 		);

@@ -6,8 +6,44 @@ var connection = mysql.createConnection(config);
 connection.connect();
 console.log(connection)
 
+// post add task data
+router.get('/getTasks',(req,res)=>{
+	const selectQuery = `SELECT * FROM tasks`;
+		connection.query(selectQuery,(error,results)=>{
+			if(error){ 
+				throw error;
+			} else {
+				res.json(results);
+			}
+	})
+})
 
-/* GET home page. */
+router.post('/addTask',(req,res)=>{
+	const taskName = req.body.taskName;
+	const taskDate = req.body.taskDate;
+	var thePromise = new Promise((resolve, reject)=>{
+		const insertQuery = `INSERT INTO tasks (taskName, taskDate)
+			VALUE (?,?);`;
+		connection.query(insertQuery, [taskName, taskDate],(error)=>{
+			if (error){
+				reject(error);
+			} else {
+				resolve({msg:"Success"});
+			}
+		})
+	})
+	thePromise.then((promiseResponse)=>{
+		const selectQuery = `SELECT * FROM tasks`;
+		connection.query(selectQuery,(error,results)=>{
+			if(error){ 
+				throw error;
+			} else {
+				res.json(results);
+			}
+		})
+	})
+});
+
 router.get('/getStudents', function(req, res, next) {
 	const selectQuery = `SELECT * FROM students`;
 	connection.query(selectQuery,(error,results)=>{
